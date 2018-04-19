@@ -7,10 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Add a new course</h2>
-    <h5>Name:</h5><input type="text" name="name">
-    <h5>Description</h5><textarea name="description" cols="40" rows="8"></textarea>
-    <button>Add</button>
+    <form action="/add" method = "post">
+        {% csrf_token %}
+        <h2>Add a new course</h2>
+        <h5>Name:</h5><input type="text" name="course_name">
+        <h5>Description</h5><textarea name="description" cols="40" rows="8"></textarea>
+        <input type="submit" value="add">
+    </form>
     <h2>Courses</h2>
     <table>
         <tr>
@@ -19,7 +22,14 @@
             <th>Date Added</th>
             <th>Actions</th>
         </tr>
-        
+        {% for Course in Course %}
+            <tr>
+                <td>{{Course.course_name}}</td>
+                <td>{{Course.description}}</td>
+                <td>{{Course.created_at}}</td>
+                <td><a href="/destroy/{{Course.id}}">Remove</a></td>
+            </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
